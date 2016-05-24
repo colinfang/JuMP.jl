@@ -419,6 +419,7 @@ macro constraint(args...)
     end
     return assert_validmodel(m, quote
         $(getloopedcode(variable, code, condition, idxvars, idxsets, idxpairs, :ConstraintRef))
+        registercon($m, $quotvarname, $variable)
         $(anonvar ? variable : :($escvarname = $variable))
     end)
 end
