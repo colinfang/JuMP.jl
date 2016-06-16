@@ -129,10 +129,11 @@ function solve(m::Model; suppress_warnings=false,
 
     # Analyze the problems traits to determine what solvers we can use
     traits = ProblemTraits(m)
-
-    # Build the MathProgBase model from the JuMP model
-    build(m, traits, suppress_warnings=suppress_warnings, relaxation=relaxation)
-
+    
+    if !m.internalModelLoaded
+        # Build the MathProgBase model from the JuMP model
+        build(m, traits, suppress_warnings=suppress_warnings, relaxation=relaxation)
+    end
     # If the model is a general nonlinear, use different logic in
     # nlp.jl to solve the problem
     traits.nlp && return solvenlp(m, traits, suppress_warnings=suppress_warnings)
@@ -350,12 +351,12 @@ function build(m::Model, traits=ProblemTraits(m);
                applicable(MathProgBase.setconstrUB!, m.internalModel, rowub) &&
                applicable(MathProgBase.setobj!, m.internalModel, f) &&
                applicable(MathProgBase.setsense!, m.internalModel, m.objSense)
-               #MathProgBase.setvarLB!(m.internalModel, copy(m.colLower))
-               #MathProgBase.setvarUB!(m.internalModel, copy(m.colUpper))
-               #MathProgBase.setconstrLB!(m.internalModel, rowlb)
-               #MathProgBase.setconstrUB!(m.internalModel, rowub)
-               #MathProgBase.setobj!(m.internalModel, f)
-               #MathProgBase.setsense!(m.internalModel, m.objSense)
+               MathProgBase.setvarLB!(m.internalModel, copy(m.colLower))
+               MathProgBase.setvarUB!(m.internalModel, copy(m.colUpper))
+               MathProgBase.setconstrLB!(m.internalModel, rowlb)
+               MathProgBase.setconstrUB!(m.internalModel, rowub)
+               MathProgBase.setobj!(m.internalModel, f)
+               MathProgBase.setsense!(m.internalModel, m.objSense)
             else
                 # The solver doesn't support changing bounds/objective
                 # We need to build the model from scratch
