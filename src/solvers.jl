@@ -401,8 +401,8 @@ function build(m::Model, traits=ProblemTraits(m);
         if relaxation
             MathProgBase.setvartype!(m.internalModel, fill(:Cont, m.numCols))
         else
-            colCats = vartypes_without_fixed(m)
-            MathProgBase.setvartype!(m.internalModel, colCats)
+            #colCats = vartypes_without_fixed(m)
+            #MathProgBase.setvartype!(m.internalModel, colCats)
         end
     elseif traits.int
         # Solver that do not implement anything other than continuous
