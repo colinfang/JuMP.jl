@@ -416,7 +416,7 @@ function build(m::Model, traits=ProblemTraits(m);
     # TODO: change this so you can warm start continuous problems?
     if !relaxation && traits.int && !all(isnan(m.colVal))
         if applicable(MathProgBase.setwarmstart!, m.internalModel, m.colVal)
-            #MathProgBase.setwarmstart!(m.internalModel, m.colVal)
+            MathProgBase.setwarmstart!(m.internalModel, m.colVal)
         else
             suppress_warnings || Base.warn_once("Solver does not appear to support providing initial feasible solutions.")
         end
