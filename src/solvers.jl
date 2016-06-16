@@ -350,12 +350,12 @@ function build(m::Model, traits=ProblemTraits(m);
                applicable(MathProgBase.setconstrUB!, m.internalModel, rowub) &&
                applicable(MathProgBase.setobj!, m.internalModel, f) &&
                applicable(MathProgBase.setsense!, m.internalModel, m.objSense)
-               MathProgBase.setvarLB!(m.internalModel, copy(m.colLower))
-               MathProgBase.setvarUB!(m.internalModel, copy(m.colUpper))
-               MathProgBase.setconstrLB!(m.internalModel, rowlb)
-               MathProgBase.setconstrUB!(m.internalModel, rowub)
-               MathProgBase.setobj!(m.internalModel, f)
-               MathProgBase.setsense!(m.internalModel, m.objSense)
+               #MathProgBase.setvarLB!(m.internalModel, copy(m.colLower))
+               #MathProgBase.setvarUB!(m.internalModel, copy(m.colUpper))
+               #MathProgBase.setconstrLB!(m.internalModel, rowlb)
+               #MathProgBase.setconstrUB!(m.internalModel, rowub)
+               #MathProgBase.setobj!(m.internalModel, f)
+               #MathProgBase.setsense!(m.internalModel, m.objSense)
             else
                 # The solver doesn't support changing bounds/objective
                 # We need to build the model from scratch
