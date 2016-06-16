@@ -129,11 +129,11 @@ function solve(m::Model; suppress_warnings=false,
 
     # Analyze the problems traits to determine what solvers we can use
     traits = ProblemTraits(m)
-    
-    if !m.internalModelLoaded
+
+    #if !m.internalModelLoaded
         # Build the MathProgBase model from the JuMP model
-        build(m, traits, suppress_warnings=suppress_warnings, relaxation=relaxation)
-    end
+    build(m, traits, suppress_warnings=suppress_warnings, relaxation=relaxation)
+    #end
     # If the model is a general nonlinear, use different logic in
     # nlp.jl to solve the problem
     traits.nlp && return solvenlp(m, traits, suppress_warnings=suppress_warnings)
